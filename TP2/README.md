@@ -21,7 +21,7 @@ cargo build --release
 
 On va pouvoir maintenant construire notre image avec Docker :
 ```bash
-docker build -t tp2 -f Dockerfile.dockerfile
+docker build -t tp2 -f tp2.dockerfile
 ```
 
 Ensuite on va pouvoir run le conteneur :
