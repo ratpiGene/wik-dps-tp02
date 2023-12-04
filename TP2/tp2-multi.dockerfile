@@ -1,5 +1,5 @@
-# Build : docker build -t tp2 -f multi-stage.dockerfile .
-FROM rust:1.65 AS builder
+# Build : docker build -t tp2 -f tp2-multi.dockerfile .
+FROM rust:latest AS builder
 
 WORKDIR /build
 
@@ -7,18 +7,18 @@ RUN adduser --group --no-create-home --disabled-login --system builder
 RUN chown -R builder /build
 USER builder
 
-RUN cargo new --bin wik_dps_tp01
-WORKDIR /build/wik_dps_tp01
+RUN cargo new --bin tp2
+WORKDIR /build/tp2
 
 COPY Cargo.* ./
 ENV RUSTFLAGS='-C target-feature=+crt-static'
 RUN cargo build --release
 RUN rm src/*.rs
-RUN rm ./target/release/deps/wik_dps_tp01*
+RUN rm ./target/release/deps/tp2*
 
 COPY ./src ./src
 RUN cargo build --release
 
 FROM scratch
-COPY --from=builder /build/wik_dps_tp01/target/release/wik_dps_tp01 /app
+COPY --from=builder /build/wik_dps_tp01/target/release/tp2 /app
 CMD ["/app"]
