@@ -6,7 +6,7 @@ services:
 
   # Un service nommée my_app
   my_app:
-    ##
+    
     # Définition du Dockerfile à build et à utiliser
     build:
       context: .

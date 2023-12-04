@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  tp3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 4
+    ports:
+      - '8080' # Le port sur lequel le service tp2 écoute à l'intérieur du conteneur
+    environment:
+      - PORT=8080
+    networks:
+      - front-network
+
+  proxy:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - '8080:80' # Port 8080 sur l'hôte redirigé vers le port 80 du conteneur Nginx
+    depends_on: 
+      - tp3
+    networks:
+      - front-network
+
+networks:
+  front-network:
+    driver: bridge
