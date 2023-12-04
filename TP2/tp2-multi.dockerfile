@@ -20,5 +20,5 @@ COPY ./src ./src
 RUN cargo build --release
 
 FROM scratch
-COPY --from=builder /build/wik_dps_tp01/target/release/tp2 /app
+COPY --from=builder /build/tp2/target/release/tp2 /app
 CMD ["/app"]
